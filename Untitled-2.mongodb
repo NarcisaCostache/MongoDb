@@ -1,0 +1,112 @@
+
+//comenzi doar cu filduri simple
+db.antrenori.insertOne({idAntrenor:20, numeAntrenor:'Savescu Petru', specialiare:'fitness'})
+db.antrenori.insertOne({idAntrenor:21, numeAntrenor:'Savescu Cosmin', specialiare:'cardio'})
+db.antrenori.insertOne({idAntrenor:22, numeAntrenor:'Savescu Cosmin', specialiare:'cardio'})
+db.antrenori.insertOne({idAntrenor:23, numeAntrenor:'Savescu Cosmin', specialiare:'cardio'})
+
+db.clienti.insertOne({idClient:1, numeClient:'Popescu', prenumeClient:'Andrei',Adresa:'Strada Soarelui, nr 3, Iasi',NrTel:0735351000, idAntrenor:20})
+db.clienti.insertOne({idClient:2, numeClient:'Popescu', prenumeClient:'Mihai',Adresa:'Strada Soarelui, nr 5, Bucuresti',NrTel:0735351001, idAntrenor:21})
+//comenzi de creare a unei colectii care sa aiba cel putin un obiect sau
+//un vector si cu minim 2 doc
+db.clienti.insertOne({
+  idClient:5,
+  numeClient:'Savlulescu',
+  prenumeClient:'Paula',
+  Adresa:'Strda Fericirii nr 30 Brasov',
+  NrTel:074563525,
+  antrenori:[
+   { numeAntrenor:'Neculcea Sabina', specialiare:'pilates'}
+  ]
+})
+db.clienti.insertOne({
+  idClient:6,
+  numeClient:'Savlulescu',
+  prenumeClient:'Andreea',
+  Adresa:'Strda Fericirii nr 30 Brasov',
+  NrTel:074563525,
+  antrenori:[
+   { numeAntrenor:'Neculcea Sabina', specialiare:'pilates'}
+  ]
+})
+db.clienti.insertOne({
+  idClient:7,
+  numeClient:'Savlulescu',
+  prenumeClient:'Maria',
+  Adresa:'Strda Fericirii nr 30 Brasov',
+  NrTel:074563525,
+  antrenori:[
+   { numeAntrenor:'Neculcea Sabina', specialiare:'pilates'}
+  ]
+})
+
+db.clienti.insertOne({
+  idClient:8,
+  numeClient:'Antonescu',
+  prenumeClient:'Maria',
+  Adresa:'Strda Fericirii nr 30 Brasov',
+  NrTel:074563525,
+  antrenori:[
+   { numeAntrenor:'Neculcea Sabina', specialiare:'pilates'}
+  ]
+})
+db.clienti.insertOne({
+  idClient:20,
+  numeClient:'Antonescu',
+  prenumeClient:'Elizabeta',
+  Adresa:'Strda Fericirii nr 30 Brasov',
+  NrTel:074563525,
+  antrenori:[
+   { numeAntrenor:'Serban Andreea', specialiare:'pilates'}
+  ]
+})
+
+db.clienti.insertOne({
+  idClient:29,
+  numeClient:'Antonescu',
+  prenumeClient:'Marina',
+  Adresa:'Strda Fericirii nr 30 Brasov',
+  NrTel:074563525,
+  antrenori:[
+   { numeAntrenor:'Serban Andreea', specialiare:'pilates'},
+   {numeAntrenor:'Balcescu David'}
+  ]
+})
+
+db.clienti.insertOne({
+  idClient:22,
+  numeClient:'Petrescu',
+  prenumeClient:'Elizabeta',
+  Adresa:'Strda Fericirii nr 30 Brasov',
+  NrTel:074563525,
+  antrenori:[
+   { numeAntrenor:'Popescu Ana-Maria', specialiare:'pilates'},
+   {numeAntrenor:'Stefanescu David'}
+  ]
+})
+db.clienti.find()
+db.antrenori.find()
+
+db.clienti.countdocuments()
+
+db.antrenori.countDocuments()
+
+//INTEROGARI
+//1. interogare dupa un field
+//Clientul cu id=1
+db.clienti.find({idClient: 1})
+
+//2.interogare dupa un field din obiect
+//clientii care o au drept antrenor pe Neculcea Sabina
+db.clienti.find({"antrenori.numeAntrenor": 'Neculcea Sabina'})
+
+//3.interogare dupa mai multe conditii
+//Clientii cu numele Antonescu care au drept antrenor Serban Andreea
+db.clienti.find({numeClient: 'Antonescu', "antrenori.numeAntrenor": 'Serban Andreea'})
+//4. Interogari cu aggregate
+db.clienti.aggregate([{ $count: "numarClienti"}])
+
+//comanda aggregate $match
+//Cati clienti au numele Maria
+db.clienti.aggregate([{ $match: {prenumeClient: 'Maria'}}, { $count: "numarClienti"}])
+//
